@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You - Reservation Confirmed</title>
+    <link rel="stylesheet" href="/static/CSS/loginstyle.css">
+</head>
+<body>
+    <div class="form-container thank-you-container">
+        <div class="form-header">
+            <h2>Thank You!</h2>
+            <p>Your bike rental reservation has been confirmed</p>
+        </div>
+
+        {% if reservation %}
+        <div class="reservation-details">
+            <h3>Reservation Details</h3>
+            <div class="detail-item">
+                <p><strong>Bike:</strong> {{ reservation.Brand }} {{ reservation.model }}</p>
+                <p><strong>Start Date:</strong> {{ reservation.start_date }}</p>
+                <p><strong>End Date:</strong> {{ reservation.end_date }}</p>
+                <p><strong>Total Cost:</strong> ${{ "%.2f"|format(reservation.total_cost) }}</p>
+                <p><strong>Status:</strong> {{ reservation.status }}</p>
+                <p><strong>Payment Status:</strong> {{ reservation.payment_status }}</p>
+            </div>
+        </div>
+
+        <div class="next-steps">
+            <h3>Next Steps</h3>
+            <ul>
+                <li>Please bring a valid ID when picking up your bike</li>
+                <li>A security deposit may be required at pickup</li>
+                <li>Review our rental policies before your pickup date</li>
+            </ul>
+        </div>
+        {% else %}
+        <div class="error-message">
+            <p>Unable to load reservation details. Please contact support if you need assistance.</p>
+        </div>
+        {% endif %}
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <div class="button-container">
+            <a href="{{ url_for('overview') }}" class="button-link">Return to Overview</a>
+        </div>
+    </div>
+</body>
+</html>

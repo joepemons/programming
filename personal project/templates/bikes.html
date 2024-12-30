@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bikes</title>
+    <link rel="stylesheet" href="/static/CSS/bikestyle.css">
+</head>
+<body>
+    <header class="header-banner">
+        <div class="header-content">
+            <h1>Bike-Rental</h1>
+            <nav class="nav-container">
+                <a href="{{ url_for('overview') }}" class="nav-link">Overview</a>
+                <a href="{{ url_for('logout') }}" class="nav-link">Logout</a>
+            </nav>
+        </div>
+    </header>
+    <div class="container" id="bikes-container">
+        <!-- Bikes will be loaded here dynamically -->
+    </div>
+
+    <script>
+        async function loadBikes() {
+            try {
+                const response = await fetch('/api/bikes');
+                const bikes = await response.json();
+                
+                const container = document.getElementById('bikes-container');
+                container.innerHTML = bikes.map(bike => `
+                    <div class="accomodation-card">
+                        <h3>${bike.Brand}</h3>
+                        <p>Model: ${bike.model}</p>
+                        <p>Type: ${bike.type}</p>
+                        <p>Price: $${bike.price}</p>
+                        <p>Availability: ${bike.status}</p>
+                        <img src="${bike.image_url}" alt="${bike.Brand} ${bike.model}" class="bike-image" width="300" height="200">
+                        ${bike.status === 'Available' 
+                            ? `<button onclick="rentBike(${bike.id})" class="button-link">Rent now</button>`
+                            : '<p>Bike not available</p>'
+                        }
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error('Error loading bikes:', error);
+            }
+        }
+
+        async function rentBike(bikeId) {
+            try {
+                const response = await fetch(`/api/bikes/${bikeId}`);
+                const bike = await response.json();
+                
+                if (bike.status === 'Available') {
+                    window.location.href = `/rent?bike_id=${bikeId}&bike_name=${bike.Brand}&bike_model=${bike.model}&bike_price=${bike.price}`;
+                } else {
+                    alert('Sorry, this bike is no longer available.');
+                }
+            } catch (error) {
+                console.error('Error renting bike:', error);
+            }
+        }
+
+        // Load bikes when page loads
+        document.addEventListener('DOMContentLoaded', loadBikes);
+    </script>
+</body>
+</html>

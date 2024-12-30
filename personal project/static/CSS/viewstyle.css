@@ -1,0 +1,116 @@
+/* Reset default margin and padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Verdana, sans-serif;
+    background-color: #fff;
+    color: #333;
+}
+
+/* Header styles */
+.header-banner {
+    background-image: url('/static/images/bike-rider.jpg');
+    background-size: cover;
+    color: #0056b3;
+    padding: 60px 0;
+    text-align: center;
+    background-position: bottom;
+    position: relative; 
+}
+
+.header-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+
+
+.nav-container {
+    position: absolute; 
+    top: 20px; 
+    right: 20px; 
+    display: flex; 
+    gap: 10px;
+}
+
+
+.nav-link {
+    text-decoration: none;
+    color: #fff;
+    font-size: 16px;
+    padding: 12px 20px; 
+    border: 2px solid transparent;
+    border-radius: 5px;
+    background-color: #007bff; 
+    transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+}
+
+.nav-link:hover {
+    background-color: #0056b3; 
+    border-color: #fff; 
+    transform: scale(1.05); 
+}
+
+section {
+    padding: 40px 0;
+}
+
+section h2 {
+    font-size: 32px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.activity {
+    display: flex;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.activity img {
+    max-width: 50%;
+    border-radius: 8px;
+    margin-right: 20px;
+}
+
+.activity div {
+    flex: 1;
+}
+
+.activity h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.activity p {
+    color: #666;
+    line-height: 1.5;
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 20px 0;
+}
+
+footer p {
+    text-align: center;
+}
+
+.restaurant-image {
+    max-width: 50%;
+    border-radius: 8px;
+    margin-left: auto;
+    margin-right: 0;
+    margin-top: 20px;
+}
