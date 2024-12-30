@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bike-rental</title>
+    <link rel="stylesheet" href="/static/CSS/homestyle.css">
+</head>
+<body>
+    <div class="hero-section">
+        <h1>Welcome to the Bike Rental Store</h1>
+        <div class="auth-buttons">
+            <a href="/login" class="auth-button">Login</a>
+            <a href="/register" class="auth-button">Register</a>
+        </div>
+    </div>
+
+    <div class="featured-section">
+        <h2>Available Bikes</h2>
+        <div id="featured-bikes" class="featured-bikes"></div>
+    </div>
+
+    <script>
+        async function loadFeaturedBikes() {
+            try {
+                const response = await fetch('/api/bikes');
+                const bikes = await response.json();
+                const featuredBikes = bikes.filter(bike => bike.status === 'Available').slice(0, 3);
+                
+                const container = document.getElementById('featured-bikes');
+                container.innerHTML = featuredBikes.map(bike => `
+                    <div class="bike-card">
+                        <img src="${bike.image_url}" alt="${bike.Brand} ${bike.model}">
+                        <h3>${bike.Brand} ${bike.model}</h3>
+                        <p>Type: ${bike.type}</p>
+                        <p>Price: $${bike.price}/day</p>
+                        <a href="/login" class="rent-button">Login to Rent</a>
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error('Error loading bikes:', error);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadFeaturedBikes);
+    </script>
+</body>
+</html>
